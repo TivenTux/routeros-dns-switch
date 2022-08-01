@@ -1,0 +1,22 @@
+:local telegramBotKey "enter_telegram_bot_token_here"
+:local chatID "enter_telegram_group_ID_here"
+
+:local currentDNS [/ip dns get server]
+:local piholeDNS "enter your main DNS server here"
+:local backupDNS "9.9.9.9"
+:local testDomain "enter_test_query_domain"
+
+:if ($currentDNS = $piholeDNS) do={
+    :do {
+        :resolve $testDomain server $piholeDNS
+    } on-error={
+        /ip dns set servers=$backupDNS
+        /tool fetch "https://api.telegram.org/bot$telegramBotKey/sendmessage?chat_id=$chatID&text=Main DNS not working! Changed DNS from $currentDNS to $backupDNS." keep-result=no
+    }
+} else={
+    :do {
+        :resolve $testDomain server $piholeDNS
+        /ip dns set servers=$piholeDNS
+        /tool fetch "https://api.telegram.org/bot$telegramBotKey/sendmessage?chat_id=$chatID&text=Main DNS is working again. Changed DNS from $currentDNS to $piholeDNS." keep-result=no
+    } on-error={}
+} 
