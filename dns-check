@@ -11,12 +11,12 @@
         :resolve $testDomain server $piholeDNS
     } on-error={
         /ip dns set servers=$backupDNS
-        /tool fetch "https://api.telegram.org/bot$telegramBotKey/sendmessage?chat_id=$chatID&text=Main DNS not working! Changed DNS from $currentDNS to $backupDNS." keep-result=no
+        /tool fetch "https://api.telegram.org/bot$telegramBotKey/sendmessage?chat_id=$chatID&text=Main DNS not working! Changed DNS to backup." keep-result=no
     }
 } else={
     :do {
         :resolve $testDomain server $piholeDNS
         /ip dns set servers=$piholeDNS
-        /tool fetch "https://api.telegram.org/bot$telegramBotKey/sendmessage?chat_id=$chatID&text=Main DNS is working again. Changed DNS from $currentDNS to $piholeDNS." keep-result=no
+        /tool fetch "https://api.telegram.org/bot$telegramBotKey/sendmessage?chat_id=$chatID&text=Main DNS working again. Reverting to main." keep-result=no
     } on-error={}
 } 
