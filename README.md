@@ -2,7 +2,7 @@
 
 In order for services like pihole or adguard home to work under mikrotik networks, a script like this or similar has to be used, if more than one DNS servers need to be set such as backup.
 
-##Edit variables in the script:
+## Edit variables in the script:
 
 **telegramBotKey** - your telegram bot token  <br>
 **chatID** - the telegram group you want to receive notifications at (the bot has to be in there)  <br>
